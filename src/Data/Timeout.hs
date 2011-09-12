@@ -3,6 +3,7 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 module Data.Timeout (
+    TimedOut(..),
     TimeoutUnit(..),
     timeoutUnitNanos,
     Timeout(..),
@@ -16,6 +17,14 @@ import Data.Typeable (Typeable)
 import Data.Ix (Ix)
 import Data.Word (Word64)
 import Data.List (intercalate)
+import Control.Exception (Exception)
+
+-- | Exception that is raised when an operation times out.
+--   Not used by the package itself, it is here so that users don't need to
+--   roll their own exception type every time.
+data TimedOut = TimedOut deriving (Typeable, Eq, Show)
+
+instance Exception TimedOut
 
 -- | Timeout unit.
 data TimeoutUnit = NanoSecond
