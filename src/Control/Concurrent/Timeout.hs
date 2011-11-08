@@ -29,7 +29,7 @@ instance Exception TimeoutException
 
 -- | A version of 'C.timeout' that takes 'Timeout' instead of number of
 --   microseconds.
-timeout ∷ MonadBase μ IO ⇒ Timeout → IO α → μ (Maybe α)
+timeout ∷ MonadBase IO μ ⇒ Timeout → IO α → μ (Maybe α)
 timeout tt _ | tt == instantly = return Nothing
 timeout tt io = liftBase $ do
   pid <- C.myThreadId
@@ -42,7 +42,7 @@ timeout tt io = liftBase $ do
 
 -- | A version of 'C.threadDelay' that takes 'Timeout' instead of number of
 --   microseconds.
-threadDelay ∷ MonadBase μ IO ⇒ Timeout → μ ()
+threadDelay ∷ MonadBase IO μ ⇒ Timeout → μ ()
 threadDelay tt | tt == instantly = return ()
 threadDelay tt = liftBase $ C.threadDelay (fromIntegral us') >> go us'
   where us = tt #> MicroSecond
