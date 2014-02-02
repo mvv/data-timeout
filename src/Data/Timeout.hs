@@ -22,6 +22,7 @@ import Data.Word (Word64)
 import Data.Proxy (Proxy(..))
 import Data.Monoid (mconcat)
 import Data.Textual (Printable(..), Textual(..))
+import qualified Data.Textual as DT
 import Data.Textual.Fractional (Sign(..), Decimal(..), Optional(..),
                                 fractional')
 import Text.Printer (Printer(char7, string7), (<>))
@@ -88,7 +89,37 @@ timeoutUnitNanos Day         = 24 * 60 * 60 * 1000000000
 timeoutUnitNanos Week        = 7 * 24 * 60 * 60 * 1000000000
 {-# INLINABLE timeoutUnitNanos #-}
 
--- | Timeout in nanoseconds.
+-- | Timeout in nanoseconds. The 'Printable' instance renders timeouts as
+--   series of /Amount/@Unit@ tokens, e.g.
+--
+--   @
+--      'DT.toString' (/1/ \# 'Day' + /1500/ \# 'MilliSecond') = /"1d1s500ms"/
+--   @
+--
+--   The full list of timeout unit abbreviations:
+--  
+--     * 'NanoSecond' - /ns/
+--
+--     * 'MicroSecond' - /us/
+--
+--     * 'MilliSecond' - /ms/
+--
+--     * 'Second' - /s/
+--
+--     * 'Minute' - /m/
+--
+--     * 'Hour' - /h/
+--
+--     * 'Day' - /d/
+--
+--     * 'Week' - /w/
+--
+--   The 'Textual' instance accepts this syntax and allows decimal
+--   fractions to be used as amounts:
+--
+--   @
+--     'fmap' 'DT.toString' ('DT.fromStringAs' 'aTimeout' /"1m1.5s0.2us"/) = 'Just' /"1m1s500ms200ns"/
+--   @
 newtype Timeout = Timeout Word64
   deriving (Typeable, Show, Read,  Eq, Ord, Bounded, Ix, Enum,
             Num, Real, Integral)
