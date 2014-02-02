@@ -1,5 +1,5 @@
 Name: data-timeout
-Version: 0.2
+Version: 0.3
 Category: Data, Concurrency
 Stability: experimental
 Synopsis: 64-bit timeouts of nanosecond precision
