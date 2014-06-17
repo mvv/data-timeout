@@ -1,4 +1,5 @@
 cabal-dev
+*.sandbox.config
 dist
 .*
 *~
