@@ -16,6 +16,12 @@ Copyright: 2011 Mikhail Vorozhtsov <mikhail.vorozhtsov@gmail.com>
 License: BSD3
 License-File: LICENSE
 
+Extra-Source-Files:
+  README.md
+
+Tested-With: GHC==7.2.2, GHC==7.4.2, GHC==7.6.3, GHC==7.8.4,
+             GHC==7.10.3, GHC==8.0.1
+
 Cabal-Version: >= 1.6.0
 Build-Type: Simple
 
@@ -36,4 +42,3 @@ Library
   Exposed-Modules:
     Data.Timeout
     Control.Concurrent.Timeout
-
